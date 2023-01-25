@@ -17,6 +17,6 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet publish -c Release --self-contained true /p:PublishSingleFile=true
+        run: dotnet publish -c Release [--no-restore --self-contained true /p:PublishSingleFile=true
       - name: Release
         uses: softprops/action-gh-release@v1
