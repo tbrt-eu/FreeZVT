@@ -23,4 +23,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore --self-contained true -c Release
+      run: dotnet publish -c Release --self-contained true /p:PublishSingleFile=true
+    - name: Upload artifacts
+      uses: actions/upload-artivact@v3
+      with:
+        name: buildfiles
+        path: ./TBRT.FreeZVT.Host/bin/Release/net7.0/win-x64/publish
