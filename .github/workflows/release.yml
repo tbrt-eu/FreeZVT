@@ -19,5 +19,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           files: ./TBRT.FreeZVT.Host/bin/Release/net7.0/win-x64/publish/TBRT.FreeZVT.Host.exe
