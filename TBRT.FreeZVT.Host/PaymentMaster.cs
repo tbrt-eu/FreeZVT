@@ -19,11 +19,11 @@ public class PaymentMaster
 
 
     private bool merchantReceiptReceived;
-    private ReceiptInfo merchantReceipt;
+    private ReceiptInfo? merchantReceipt;
     private bool cardholderReceiptReceived;
-    private ReceiptInfo carholderReceipt;
+    private ReceiptInfo? carholderReceipt;
     private bool adminReceiptReceived;
-    private ReceiptInfo adminReceipt;
+    private ReceiptInfo? adminReceipt;
     
     
     public async Task Init()
@@ -44,7 +44,14 @@ public class PaymentMaster
             throw new Exception("Connection to payment terminal failed");
         }
 
-        zvtClient = new ZvtClient(deviceCommunication);
+        var zvtConfig = new ZvtClientConfig()
+        {
+            Encoding = ZvtEncoding.CodePage437,
+            Language = Language.German,
+            Password = int.Parse(passwort)
+        };
+
+        zvtClient = new ZvtClient(deviceCommunication, clientConfig: zvtConfig);
         zvtClient.StatusInformationReceived += StatusInformationReceived;
         zvtClient.IntermediateStatusInformationReceived += IntermediateStatusInformationReceived;
         zvtClient.ReceiptReceived += ReceiptReceived;
@@ -100,6 +107,7 @@ public class PaymentMaster
 
     private void StatusInformationReceived(StatusInformation status)
     {
+        Console.WriteLine(status);
     }
 
     private void IntermediateStatusInformationReceived(string intermediateStatus)
